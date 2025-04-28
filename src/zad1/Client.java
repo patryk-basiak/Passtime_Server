@@ -46,8 +46,9 @@ public class Client {
         try {
             ByteBuffer messageBuffer = ByteBuffer.allocate(1024);
             clientSocket.write(ByteBuffer.wrap(s.getBytes(StandardCharsets.UTF_8)));
-            while(true)
-                if(clientSocket.read(messageBuffer) != 0) break;
+            while(clientSocket.read(messageBuffer) == 0){
+                 int aa = 0;
+            }
             messageBuffer.flip();
             return StandardCharsets.UTF_8.decode(messageBuffer).toString();
         } catch (IOException e) {

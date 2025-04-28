@@ -17,8 +17,10 @@ public class Main {
     Options opts = Tools.createOptionsFromYaml(fileName);
     String host = opts.getHost();
     int port = opts.getPort();
-    boolean concur =  opts.isConcurMode();
-    boolean showRes = opts.isShowSendRes();
+//    boolean concur =  opts.isConcurMode();
+    boolean concur =  true;
+//    boolean showRes = opts.isShowSendRes();
+    boolean showRes = true;
     Map<String, List<String>> clRequests = opts.getClientsMap();
     ExecutorService es = Executors.newCachedThreadPool();
     List<ClientTask> ctasks = new ArrayList<>();

@@ -53,9 +53,9 @@ public class Time {
             minutes = ChronoUnit.MINUTES.between(zdt, zdt1);
         }
 
-        double weeks = (double) days / 7;
-        Period difference = Period.between(ld, ld1);
 
+        Period difference = Period.between(ld, ld1);
+        double weeks = (double) days / 7;
         StringBuilder result = new StringBuilder();
 
         if (isTimeFormat) {
@@ -81,14 +81,14 @@ public class Time {
                     .append(dateTimeFormatter.format(ld1))
                     .append(" (")
                     .append(dniTygodnia[ld1.getDayOfWeek().getValue() - 1])
-                    .append(")\n")
-                    .append("- mija: ")
-                    .append(days)
-                    .append(" dni, tygodni ")
-                    .append(String.format("%.2f", weeks))
-                    .append("\n");
+                    .append(")\n");
         }
-
+        result.append("- mija: ")
+                .append(days)
+                .append(days == 1 ? " dzień, " : " dni, ")
+                .append("tygodni ")
+                .append(String.format("%.2f", weeks).replace(",","."))
+                .append("\n");
         if (hours > 0 || minutes > 0) {
             result.append("- godzin: ")
                     .append(hours)

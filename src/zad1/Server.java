@@ -10,9 +10,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -101,18 +101,18 @@ public class Server extends Thread {
         if(message.startsWith("login")){
             clients.put(socketChannel,message.split(" +")[1]);
             clientLog.put(clients.get(socketChannel), new ArrayList<>());
-            clientLog.get(clients.get(socketChannel)).add("logged in \n");
+            clientLog.get(clients.get(socketChannel)).add("logged in\n");
             return "logged in";
         }else if(message.equals("bye")){
-            clientLog.get(clients.get(socketChannel)).add("logged out \n");
+            clientLog.get(clients.get(socketChannel)).add("logged out\n");
             return "logged out";
         }else if(message.equals("bye and log transfer")){
-            clientLog.get(clients.get(socketChannel)).add("logged out \n");
+            clientLog.get(clients.get(socketChannel)).add("logged out\n");
             return getClientLog(clients.get(socketChannel));
         }else{
             clientLog.get(clients.get(socketChannel)).add("Request: " + message + "\n");
             String reply = Time.passed(message.split(" +")[0], message.split(" +")[1]);
-            clientLog.get(clients.get(socketChannel)).add("Result: \n" + reply + "\n");
+            clientLog.get(clients.get(socketChannel)).add("Result:\n" + reply + "\n");
             return reply;
         }
     }
@@ -128,7 +128,7 @@ public class Server extends Thread {
             l += " request at ";
         }
 
-        l += new SimpleDateFormat("HH:mm:ss.SSS").format(Calendar.getInstance().getTime());
+        l +=  LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSS"));
         if(!message.equals("bye") && !message.startsWith("login") && !message.equals("bye and log transfer")){
             l += ": " + '"'+ message + '"';
         }

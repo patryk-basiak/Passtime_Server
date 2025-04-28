@@ -9,7 +9,6 @@ package zad1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
 public class ClientTask extends FutureTask<String> {
@@ -18,21 +17,20 @@ public class ClientTask extends FutureTask<String> {
     private final boolean showRes;
     private ArrayList<String> replyList;
 
-    public ClientTask(Client client, List<String> list, boolean showRes) {
+    public ClientTask(Client client0, List<String> list, boolean showRes) {
         super(() -> {
-            client.connect();
-            client.send("login " + client.getName());
+            client0.connect();
+            client0.send("login " + client0.getName());
             List<String> replies = new ArrayList<>();
             for(String req : list) {
-                String res = client.send(req);
-                replies.add(res);
+                String res = client0.send(req);
                 if (showRes) System.out.println(res);
             }
-            String clog = client.send("bye and log transfer");
+            String clog = client0.send("bye and log transfer");
             replies.add(clog);
             return String.join(", ", replies);
         });
-        this.client = client;
+        this.client = client0;
         this.list = list;
         this.showRes = showRes;
         replyList = new ArrayList<>();
