@@ -136,7 +136,7 @@ public class Server extends Thread {
     }
     private String getClientLog(String Client){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("\n=== ").append(Client).append(" log start ===\n");
+        stringBuilder.append("===").append(Client).append(" log start ===\n");
         for(String s: clientLog.get(Client)){
             stringBuilder.append(s);
         }
